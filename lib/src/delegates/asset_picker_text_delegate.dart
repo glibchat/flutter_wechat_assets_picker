@@ -183,8 +183,14 @@ class AssetPickerTextDelegate {
 
   String get sUnitAssetCountLabel => '数量';
 
+  String get manage => '管理';
+
+  String get limitedAccessGiven => '您已授权 FlaiChat 仅访问部分照片.';
+
+  String get selectMorePhoto => '选择更多照片';
+
   /// Fallback delegate for semantics determined by platform.
-  ///
+  /// You've given FlaiChat permission to access only a select number of photos.
   /// The purpose of this field is to provide a fallback delegate references
   /// when a language does not supported by Talkback or VoiceOver. Set this to
   /// another text delegate makes screen readers read accordingly.
@@ -292,6 +298,16 @@ class EnglishAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'count';
+
+  @override
+  String get manage => 'Manage';
+
+  @override
+  String get limitedAccessGiven =>
+      "You've given FlaiChat permission to access only a select number of photos.";
+
+  @override
+  String get selectMorePhoto => 'Select More Photos';
 }
 
 /// [AssetPickerTextDelegate] implements with Hebrew.
@@ -387,6 +403,16 @@ class HebrewAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'כמות';
+
+  @override
+  String get manage => 'לנהל';
+
+  @override
+  String get limitedAccessGiven =>
+      'נתת ל-FlaiChat הרשאה לגשת רק למספר מצומצם של תמונות.';
+
+  @override
+  String get selectMorePhoto => 'בחר עוד תמונות';
 
   @override
   AssetPickerTextDelegate get semanticsTextDelegate {
@@ -489,6 +515,16 @@ class GermanAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'Anzahl';
+
+  @override
+  String get manage => 'verwalten';
+
+  @override
+  String get limitedAccessGiven =>
+      'Sie haben FlaiChat die Berechtigung erteilt, nur auf eine ausgewählte Anzahl von Fotos zuzugreifen.';
+
+  @override
+  String get selectMorePhoto => 'Weitere Fotos auswählen';
 }
 
 /// [AssetPickerTextDelegate] implements with Russian.
@@ -586,6 +622,16 @@ class RussianAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'количество';
+
+  @override
+  String get manage => 'управлять';
+
+  @override
+  String get limitedAccessGiven =>
+      'Вы предоставили FlaiChat разрешение на доступ только к ограниченному числу фотографий.';
+
+  @override
+  String get selectMorePhoto => 'Выбрать другие фотографии';
 }
 
 /// [AssetPickerTextDelegate] implements with Japanese.
@@ -682,6 +728,15 @@ class JapaneseAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => '数';
+
+  @override
+  String get manage => '管理する';
+
+  @override
+  String get limitedAccessGiven => 'FlaiChat に対して、選択された写真のみアクセスする許可を与えました。';
+
+  @override
+  String get selectMorePhoto => 'もっと写真を選択';
 }
 
 /// [AssetPickerTextDelegate] implements with Arabic.
@@ -779,6 +834,16 @@ class ArabicAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'عدد';
+
+  @override
+  String get manage => 'إدارة';
+
+  @override
+  String get limitedAccessGiven =>
+      'لقد منحت FlaiChat إذنًا بالوصول إلى عدد محدود فقط من الصور.';
+
+  @override
+  String get selectMorePhoto => 'اختر المزيد من الصور';
 }
 
 /// [AssetPickerTextDelegate] implements with French.
@@ -878,6 +943,16 @@ class FrenchAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'quantité';
+
+  @override
+  String get manage => 'gérer.';
+
+  @override
+  String get limitedAccessGiven =>
+      "Vous avez donné à FlaiChat l'autorisation d'accéder uniquement à un nombre sélectionné de photos.";
+
+  @override
+  String get selectMorePhoto => 'Sélectionner plus de photos';
 }
 
 /// [AssetPickerTextDelegate] implements with Vietnamese.
@@ -974,6 +1049,16 @@ class VietnameseAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'số lượng';
+
+  @override
+  String get manage => 'quản lý';
+
+  @override
+  String get limitedAccessGiven =>
+      'Bạn đã cho FlaiChat quyền truy cập chỉ vào một số lượng ảnh nhất định.';
+
+  @override
+  String get selectMorePhoto => 'Chọn thêm ảnh';
 }
 
 /// [AssetPickerTextDelegate] implements with Turkish
@@ -1068,6 +1153,16 @@ class TurkishAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => 'Sayı';
+
+  @override
+  String get manage => 'yönetmek';
+
+  @override
+  String get limitedAccessGiven =>
+      "FlaiChat'a yalnızca seçili sayıda fotoğrafa erişim izni verdiniz.";
+
+  @override
+  String get selectMorePhoto => 'Daha Fazla Fotoğraf Seç';
 }
 
 /// [AssetPickerTextDelegate] implements with Korean.
@@ -1162,6 +1257,15 @@ class KoreanAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get sUnitAssetCountLabel => '개';
+
+  @override
+  String get manage => '관리하다';
+
+  @override
+  String get limitedAccessGiven => 'FlaiChat에 선택된 일부 사진만 접근할 수 있는 권한을 부여했습니다.';
+
+  @override
+  String get selectMorePhoto => '더 많은 사진 선택';
 }
 
 /// [AssetPickerTextDelegate] implements with Traditional Chinese.
@@ -1256,4 +1360,13 @@ class TraditionalChineseAssetPickerTextDelegate
 
   @override
   String get sUnitAssetCountLabel => '數量';
+
+  @override
+  String get manage => '管理';
+
+  @override
+  String get limitedAccessGiven => '您已授權 FlaiChat 僅訪問部分照片。';
+
+  @override
+  String get selectMorePhoto => '選擇更多照片';
 }

@@ -547,11 +547,11 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
             const SizedBox(width: 15),
             Expanded(
               child: ScaleText(
-                textDelegate.accessAllTip,
+                textDelegate.limitedAccessGiven,
                 style: context.textTheme.bodySmall?.copyWith(
                   fontSize: 14,
                 ),
-                semanticsLabel: semanticsTextDelegate.accessAllTip,
+                semanticsLabel: semanticsTextDelegate.limitedAccessGiven,
               ),
             ),
             Icon(
@@ -675,7 +675,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
       ),
     );
 
-    final Widget goToSettingsButton = MaterialButton(
+    final Widget manageButton = MaterialButton(
       elevation: 0,
       minWidth: size.width / 2,
       height: appBarItemHeight * 1.25,
@@ -684,10 +684,18 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
       ),
-      onPressed: PhotoManager.openSetting,
+      onPressed: () {
+        if (isAppleOS(context)) {
+          PhotoManager.openSetting();
+        } else {
+          _onManagePressed(context: context);
+        }
+      },
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       child: ScaleText(
-        textDelegate.goToSystemSettings,
+        isAppleOS(context)
+            ? textDelegate.goToSystemSettings
+            : textDelegate.manage,
         style: const TextStyle(fontSize: 17),
         semanticsLabel: semanticsTextDelegate.goToSystemSettings,
       ),
@@ -721,7 +729,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
                 children: <Widget>[
                   closeButton,
                   Expanded(child: limitedTips),
-                  goToSettingsButton,
+                  manageButton,
                   SizedBox(height: size.height / 18),
                   accessLimitedButton,
                   SizedBox(
@@ -733,6 +741,47 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
                 ],
               ),
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _onManagePressed({required BuildContext context}) {
+    showModalBottomSheet<String>(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          height: 200,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                onTap: () {
+                  PhotoManager.presentLimited();
+                  Navigator.maybeOf(context)?.maybePop();
+                },
+                leading: const Icon(Icons.photo),
+                title: ScaleText(
+                  textDelegate.selectMorePhoto,
+                  style: const TextStyle(fontSize: 18),
+                  semanticsLabel: semanticsTextDelegate.goToSystemSettings,
+                ),
+              ),
+              ListTile(
+                onTap: () {
+                  PhotoManager.openSetting();
+                  Navigator.maybeOf(context)?.maybePop();
+                },
+                leading: const Icon(Icons.settings),
+                title: ScaleText(
+                  textDelegate.goToSystemSettings,
+                  style: const TextStyle(fontSize: 18),
+                  semanticsLabel: semanticsTextDelegate.goToSystemSettings,
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -1839,10 +1888,16 @@ class DefaultAssetPickerBuilderDelegate
             ValueListenableBuilder<PermissionState>(
               valueListenable: permissionNotifier,
               builder: (_, PermissionState ps, Widget? child) => Semantics(
-                label: '${semanticsTextDelegate.viewingLimitedAssetsTip}, '
-                    '${semanticsTextDelegate.changeAccessibleLimitedAssets}',
+                label: '${semanticsTextDelegate.limitedAccessGiven}, '
+                    '${semanticsTextDelegate.manage}',
                 button: true,
-                onTap: PhotoManager.presentLimited,
+                onTap: () {
+                  if (isAppleOS(context)) {
+                    PhotoManager.presentLimited();
+                  } else {
+                    _onManagePressed(context: context);
+                  }
+                },
                 hidden: !isPermissionLimited,
                 focusable: isPermissionLimited,
                 excludeSemantics: true,
@@ -1857,11 +1912,10 @@ class DefaultAssetPickerBuilderDelegate
                   TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                        text: textDelegate.viewingLimitedAssetsTip,
+                        text: textDelegate.limitedAccessGiven,
                       ),
                       TextSpan(
-                        text: ' '
-                            '${textDelegate.changeAccessibleLimitedAssets}',
+                        text: ' ${textDelegate.manage}',
                         style: TextStyle(color: interactiveTextColor(context)),
                         recognizer: TapGestureRecognizer()
                           ..onTap = PhotoManager.presentLimited,
@@ -2343,7 +2397,11 @@ class DefaultAssetPickerBuilderDelegate
     return GestureDetector(
       onTap: () {
         Feedback.forTap(context);
-        PhotoManager.openSetting();
+        if (isAppleOS(context)) {
+          PhotoManager.openSetting();
+        } else {
+          _onManagePressed(context: context);
+        }
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10)
@@ -2360,11 +2418,11 @@ class DefaultAssetPickerBuilderDelegate
             const SizedBox(width: 15),
             Expanded(
               child: ScaleText(
-                textDelegate.accessAllTip,
+                textDelegate.limitedAccessGiven,
                 style: context.textTheme.bodySmall?.copyWith(
                   fontSize: 14,
                 ),
-                semanticsLabel: semanticsTextDelegate.accessAllTip,
+                semanticsLabel: semanticsTextDelegate.limitedAccessGiven,
               ),
             ),
             Icon(
